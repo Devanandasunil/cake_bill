@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cake Shop</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 20px;
+      background: #fff8f5;
+    }
+    h1 {
+      text-align: center;
+      color: #d6336c;
+    }
+    .cake {
+      border: 2px solid #ffd6e0;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 12px;
+      width: 250px;
+      display: inline-block;
+      text-align: center;
+      background: #fff;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+    .cake img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .cake button {
+      padding: 5px 12px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .add {
+      background: #28a745;
+      color: white;
+    }
+    .remove {
+      background: #dc3545;
+      color: white;
+    }
+    #bill {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #333;
+      background: #fdf2f8;
+      border-radius: 12px;
+      width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+    #bill h3 {
+      text-align: center;
+      color: #b5179e;
+    }
+    #cart-items {
+      margin-top: 15px;
+    }
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+    .total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #d6336c;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍰 Welcome to Cake Shop 🍰</h1>
+
+  <div class="cake">
+    <img src="images/rainbow_cake.jpg" alt="Rainbow Cake">
+    <h3>Rainbow Cake</h3>
+    <p>Rs. 300</p>
+    <button class="add" onclick="addToCart('Rainbow Cake',300)">+</button>
+    <button class="remove" onclick="removeFromCart('Rainbow Cake',300)">-</button>
+  </div>
+
+  <div class="cake">
+    <img src="images/chocolate_cake.jpg" alt="Chocolate Cake">
+    <h3>Chocolate Cake</h3>
+    <p>Rs. 200</p>
+    <button class="add" onclick="addToCart('Chocolate Cake',200)">+</button>
+    <button class="remove" onclick="removeFromCart('Chocolate Cake',200)">-</button>
+  </div>
+
+  <div class="cake">
+    <img src="images/red_velvet_cake.jpg" alt="Red Velvet Cake">
+    <h3>Red Velvet Cake</h3>
+    <p>Rs. 250</p>
+    <button class="add" onclick="addToCart('Red Velvet Cake',250)">+</button>
+    <button class="remove" onclick="removeFromCart('Red Velvet Cake',250)">-</button>
+  </div>
+
+  <div class="cake">
+    <img src="images/black_forest_cake.jpg" alt="Black Forest Cake">
+    <h3>Black Forest Cake</h3>
+    <p>Rs. 350</p>
+    <button class="add" onclick="addToCart('Black Forest Cake',350)">+</button>
+    <button class="remove" onclick="removeFromCart('Black Forest Cake',350)">-</button>
+  </div>
+
+  <div id="bill">
+    <h3>🧾 Purchase Order Bill 🧾</h3>
+    <div id="cart-items"></div>
+    <p class="total" id="total">Total Price: Rs. 0</p>
+  </div>
+
+  <script>
+    let cart = {
+      "Rainbow Cake": { qty: 0, price: 300 },
+      "Chocolate Cake": { qty: 0, price: 200 },
+      "Red Velvet Cake": { qty: 0, price: 250 },
+      "Black Forest Cake": { qty: 0, price: 350 }
+    };
+
+    function addToCart(item, price) {
+      cart[item].qty++;
+      updateCart();
+    }
+
+    function removeFromCart(item, price) {
+      if (cart[item].qty > 0) {
+        cart[item].qty--;
+        updateCart();
+      }
+    }
+
+    function updateCart() {
+      let cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";
+      let totalPrice = 0;
+
+      for (let item in cart) {
+        if (cart[item].qty > 0) {
+          let cost = cart[item].qty * cart[item].price;
+          totalPrice += cost;
+          cartItems.innerHTML += `
+            <div class="cart-row">
+              <span>${item} (x${cart[item].qty})</span>
+              <span>Rs. ${cost}</span>
+            </div>
+          `;
+        }
+      }
+
+      document.getElementById("total").innerText = `Total Price: Rs. ${totalPrice}`;
+    }
+  </script>
+</body>
+</html>
